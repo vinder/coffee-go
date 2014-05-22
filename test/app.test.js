@@ -46,10 +46,11 @@ describe("app", function() {
                 return tester
                     .setup.user.state('states:start')
                     .input('1')
+
                     .check.interaction({
                         state: 'states:brew',
                         reply: [
-                            'Brewing!',
+                            'Brewing some coffee',
                         ].join('\n')
                     })
                     .run();

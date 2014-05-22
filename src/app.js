@@ -35,8 +35,18 @@ go.app = function() {
 
         self.states.add('states:brew', function(name) {
             return new EndState(name, {
-                text: 'Brewing!',
-                next: 'states:start'
+                text: 'Brewing some ' + (self.contact.extra.brew || 'coffee'),
+                next: function() {
+                    var person = self.im.user.addr;
+                    return self
+                            .http.post('http://powerful-sierra-2165.herokuapp.com/api/v1/person/' +
+                                person + '/brew/' + self.contact.extra.brew)
+                            .then(function(resp) {
+                                return {
+                                    name: 'states:start'
+                                };
+                            });
+                }
             });
         });
 
