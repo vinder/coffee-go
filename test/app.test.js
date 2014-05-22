@@ -86,10 +86,11 @@ describe("app", function() {
             it("should should post their response", function() {
                 return tester
                     .setup.user.state('states:prefs')
+                    .setup.user.addr('1234567')
                     .input('1')
                     .check(function(api) {
                         var req = api.http.requests[0];
-                        assert.equal(req.url, 'http://powerful-sierra-2165.herokuapp.com/api/v1/person/Herman/brew/coffee');
+                        assert.equal(req.url, 'http://powerful-sierra-2165.herokuapp.com/api/v1/person/1234567/brew/coffee');
                     })
                     .run();
             });

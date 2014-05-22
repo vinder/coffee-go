@@ -49,7 +49,7 @@ go.app = function() {
                     new Choice('tea', 'Tea'),
                 ],
                 next: function(choice) {
-                    var person = "Herman";
+                    var person = self.im.user.addr;
                     return self
                         .http.post('http://powerful-sierra-2165.herokuapp.com/api/v1/person/' +
                             person + '/brew/' + choice.value)
