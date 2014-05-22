@@ -17,6 +17,11 @@ go.app = function() {
             // We use `JsonApi` here. This ensure requests are json encoded and
             // responses are json decoded.
             self.http = new JsonApi(self.im);
+            return self.im
+                .contacts.for_user()
+                .then(function(user_contact) {
+                    self.contact = user_contact;
+                });
         };
 
         self.states.add('states:start', function(name) {
@@ -53,9 +58,13 @@ go.app = function() {
                 ],
                 next: function(choice) {
                     var person = self.im.user.addr;
-                    return self
-                        .http.post('http://powerful-sierra-2165.herokuapp.com/api/v1/person/' +
-                            person + '/brew/' + choice.value)
+                    self.contact.extra.brew = choice.value;
+                    return self.im
+                        .contacts.save(self.contact)
+                        .then(function(){
+                            self.http.post('http://powerful-sierra-2165.herokuapp.com/api/v1/person/' +
+                                person + '/brew/' + choice.value);
+                        })
                         .then(function(resp) {
                             return {
                                 name: 'states:end'

@@ -83,6 +83,17 @@ describe("app", function() {
                     .run();
             });
 
+            it("should should save their response", function() {
+                return tester
+                    .setup.user.state('states:prefs')
+                    .input('1')
+                    .check(function(api) {
+                        var contact = api.contacts.store[0];
+                        assert.equal(contact.extra.brew, 'coffee');
+                    })
+                    .run();
+            });
+
             it("should should post their response", function() {
                 return tester
                     .setup.user.state('states:prefs')
