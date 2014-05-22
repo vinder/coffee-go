@@ -14,7 +14,7 @@ go.app = function() {
 
         self.states.add('states:start', function(name) {
             return new MenuState(name, {
-                question: 'Welcome to COFFEE! (or tea):',
+                question: 'Welcome to VME COFFEE MACHINE! (or rooibos tea):',
 
                 choices: [
                     new Choice('states:brew', 'Brew a cup'),
@@ -43,7 +43,8 @@ go.app = function() {
                 choices: [
                     new Choice('coffee', 'Coffee'),
                     new Choice('tea', 'Tea'),
-                ]
+                ],
+                next: 'states:start'
             });
         });
 

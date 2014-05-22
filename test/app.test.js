@@ -29,7 +29,7 @@ describe("app", function() {
                     .check.interaction({
                         state: 'states:start',
                         reply: [
-                            'Welcome to COFFEE! (or tea):',
+                            'Welcome to VME COFFEE MACHINE! (or rooibos tea):',
                             '1. Brew a cup',
                             '2. Is it ready?',
                             '3. Preferences',
@@ -46,7 +46,7 @@ describe("app", function() {
                     .setup.user.state('states:start')
                     .input('1')
                     .check.interaction({
-                        state: 'states:start',
+                        state: 'states:brew',
                         reply: [
                             'Brewing!',
                         ].join('\n')
@@ -59,7 +59,7 @@ describe("app", function() {
                     .setup.user.state('states:start')
                     .input('2')
                     .check.interaction({
-                        state: 'states:start',
+                        state: 'states:status',
                         reply: [
                             'Status pending.'
                         ].join('\n')
@@ -87,7 +87,7 @@ describe("app", function() {
                     .setup.user.state('states:start')
                     .input('4')
                     .check.interaction({
-                        state: 'states:start',
+                        state: 'states:end',
                         reply: [
                             'Bye!'
                         ].join('\n')
