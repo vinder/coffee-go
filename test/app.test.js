@@ -1,6 +1,7 @@
 var vumigo = require('vumigo_v02');
 var fixtures = require('./fixtures');
 var AppTester = vumigo.AppTester;
+var assert = require('assert');
 
 
 describe("app", function() {
@@ -82,6 +83,17 @@ describe("app", function() {
                     .run();
             });
 
+            it("should should post their response", function() {
+                return tester
+                    .setup.user.state('states:prefs')
+                    .input('1')
+                    .check(function(api) {
+                        var req = api.http.requests[0];
+                        assert.equal(req.url, 'http://powerful-sierra-2165.herokuapp.com/api/v1/person/Herman/brew/coffee');
+                    })
+                    .run();
+            });
+
             it("should exit on 4", function() {
                 return tester
                     .setup.user.state('states:start')
@@ -96,4 +108,5 @@ describe("app", function() {
             });
         });
     });
+
 });

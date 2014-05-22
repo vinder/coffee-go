@@ -8,9 +8,16 @@ go.app = function() {
     var ChoiceState = vumigo.states.ChoiceState;
     var MenuState = vumigo.states.MenuState;
     var EndState = vumigo.states.EndState;
+    var JsonApi = vumigo.http.api.JsonApi;
 
     var GoApp = App.extend(function(self) {
         App.call(self, 'states:start');
+
+        self.init = function() {
+            // We use `JsonApi` here. This ensure requests are json encoded and
+            // responses are json decoded.
+            self.http = new JsonApi(self.im);
+        };
 
         self.states.add('states:start', function(name) {
             return new MenuState(name, {
@@ -44,7 +51,17 @@ go.app = function() {
                     new Choice('coffee', 'Coffee'),
                     new Choice('tea', 'Tea'),
                 ],
-                next: 'states:start'
+                next: function(choice) {
+                    var person = "Herman";
+                    return self
+                        .http.post('http://powerful-sierra-2165.herokuapp.com/api/v1/person/' +
+                            person + '/brew/' + choice.value)
+                        .then(function(resp) {
+                            return {
+                                name: 'states:end'
+                            };
+                        });
+                }
             });
         });
 
